@@ -85,7 +85,7 @@
     },
     {
         "course_name": "try",
-        "start_time": "00:10",
+        "start_time": "01:60",
         "location": "111",
         "weekday": 3,
         "week_type": "every"
