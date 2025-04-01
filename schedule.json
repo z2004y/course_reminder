@@ -1,0 +1,93 @@
+[
+    {
+        "course_name": "综合英语 Ⅳ",
+        "start_time": "08:00",
+        "location": "知行楼4101",
+        "weekday": 1,
+        "week_type": "every"
+    },
+    {
+        "course_name": "中国文化概要",
+        "start_time": "08:00",
+        "location": "知行楼4209",
+        "weekday": 2,
+        "week_type": "single"
+    },
+    {
+        "course_name": "综合英语 Ⅳ",
+        "start_time": "08:00",
+        "location": "知行楼4101",
+        "weekday": 3,
+        "week_type": "every"
+    },
+    {
+        "course_name": "英语写作 Ⅱ",
+        "start_time": "08:00",
+        "location": "知行楼4307",
+        "weekday": 4,
+        "week_type": "every"
+    },
+    {
+        "course_name": "大学法语 Ⅰ",
+        "start_time": "08:00",
+        "location": "知行楼4407",
+        "weekday": 5,
+        "week_type": "every"
+    },
+    {
+        "course_name": "教育学基础",
+        "start_time": "10:10",
+        "location": "博文楼3105",
+        "weekday": 1,
+        "week_type": "every"
+    },
+    {
+        "course_name": "大学法语 Ⅰ",
+        "start_time": "10:10",
+        "location": "知行楼4406",
+        "weekday": 2,
+        "week_type": "single"
+    },
+    {
+        "course_name": "习近平总书记关于教育的重要论述研究",
+        "start_time": "10:10",
+        "location": "博文楼3104",
+        "weekday": 2,
+        "week_type": "double"
+    },
+    {
+        "course_name": "中学英语课程标准与教材分析",
+        "start_time": "10:10",
+        "location": "知行楼4209",
+        "weekday": 3,
+        "week_type": "every"
+    },
+    {
+        "course_name": "马克思主义基本原理",
+        "start_time": "10:10",
+        "location": "4302第二学术报告厅",
+        "weekday": 4,
+        "week_type": "every"
+    },
+    {
+        "course_name": "大学体育 Ⅳ",
+        "start_time": "16:40",
+        "location": "西校区操场",
+        "weekday": 3,
+        "week_type": "every"
+    },
+    {
+        "course_name": "构建我的计算思维——基于问题求解的趣味编程",
+        "start_time": "19:30",
+        "location": "4412公共计算机实验室（三）",
+        "weekday": 1,
+        "week_type": "every"
+    },
+    {
+        "course_name": "try",
+        "start_time": "00:10",
+        "location": "111",
+        "weekday": 3,
+        "week_type": "every"
+    }
+]
