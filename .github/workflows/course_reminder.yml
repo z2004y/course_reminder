@@ -1,9 +1,9 @@
 name: Course Reminder
 on:
   schedule:
-    # 北京时间每天 7:00-22:55，每5分钟运行一次（UTC时间需要-8小时）
-    - cron: '*/5 23-23,0-14 * * *'  # UTC时间23:00-14:00（对应北京时间7:00-22:00）
-  workflow_dispatch:        # 允许手动触发
+    # 修正后的 cron 表达式：覆盖 UTC 23:00-23:59 和 0:00-14:59，每5分钟运行一次
+    - cron: '*/5 23,0-14 * * *'  # 注意小时部分改为 23,0-14（逗号分隔）
+  workflow_dispatch:
 
 jobs:
   check-schedule:
@@ -19,11 +19,11 @@ jobs:
         python-version: '3.10'
 
     - name: Install dependencies
-      run: pip install requests pytz  # 添加时区支持
+      run: pip install requests pytz
 
     - name: Run reminder check
       env:
-        TZ: Asia/Shanghai            # 设置时区为北京时间
+        TZ: Asia/Shanghai
         WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
         WXPUSHER_TOPIC_ID: ${{ secrets.WXPUSHER_TOPIC_ID }}
       run: python main.py
