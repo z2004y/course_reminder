@@ -1,7 +1,7 @@
 name: Course Reminder
 on:
      schedule:
-       - cron: '*/1 * * * *'  # 每分钟运行一次（快速验证）
+       - cron: '*/5 * * * *'  # 每分钟运行一次（快速验证）
      workflow_dispatch: 
 jobs:
   check-schedule:
