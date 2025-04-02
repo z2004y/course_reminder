@@ -1,10 +1,7 @@
 name: Course Reminder
 on:
-  schedule:
-    # 拆分两个 cron 表达式确保全覆盖
-    - cron: '*/5 23 * * *'     # UTC 23:00-23:55（北京时间 7:00-7:55）
-    - cron: '*/5 0-14 * * *'   # UTC 0:00-14:55（北京时间 8:00-22:55）
-  workflow_dispatch:
+     schedule:
+       - cron: '*/1 * * * *'  # 每分钟运行一次（快速验证）
 
 jobs:
   check-schedule:
