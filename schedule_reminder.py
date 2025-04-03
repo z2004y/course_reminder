@@ -57,7 +57,7 @@ def send_daily_schedule():
     today_weekday = current_time.isoweekday()
     
     # 在代码中指定开学日期
-    start_date_str = "2023-09-04"  # 修改为你的开学日期
+    start_date_str = "2023-02-24"  # 修改为你的开学日期
     try:
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
     except ValueError:
