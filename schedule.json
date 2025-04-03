@@ -32,7 +32,7 @@
         "start_time": "08:00",
         "location": "知行楼4307",
         "weekday": 4,
-        "week_type": "every"
+        "week_type": "6"
     },
     {
         "course_name": "大学法语 Ⅰ",
@@ -74,7 +74,7 @@
         "start_time": "10:10",
         "location": "4302第二学术报告厅",
         "weekday": 4,
-        "week_type": "every"
+        "week_type": "5"
     },
     {
         "course_name": "大学体育 Ⅳ",
