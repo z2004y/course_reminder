@@ -11,7 +11,7 @@
         "start_time": "08:00",
         "location": "知行楼4209",
         "weekday": 2,
-        "week_type": "single"
+        "week_type": "1,3,5,9,11,13,15,17"
     },
     {
         "course_name": "综合英语 Ⅳ",
@@ -46,14 +46,14 @@
         "start_time": "10:10",
         "location": "知行楼4406",
         "weekday": 2,
-        "week_type": "single"
+        "week_type": "1,3,5,7,9,11,13,15,17"
     },
     {
         "course_name": "习近平总书记关于教育的重要论述研究",
         "start_time": "10:10",
         "location": "博文楼3104",
         "weekday": 2,
-        "week_type": "double"
+        "week_type": "2,4,6,8,10,12,14,16"
     },
     {
         "course_name": "中学英语课程标准与教材分析",
@@ -81,13 +81,6 @@
         "start_time": "19:30",
         "location": "4412公共计算机实验室（三）",
         "weekday": 1,
-        "week_type": "every"
-    },
-    {
-        "course_name": "try",
-        "start_time": "02:00",
-        "location": "111",
-        "weekday": 3,
         "week_type": "every"
     }
 ]
