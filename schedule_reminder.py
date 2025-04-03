@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from datetime import datetime, timedelta
+from datetime import datetime
 import pytz
 
 def load_schedule():
@@ -57,7 +57,7 @@ def send_daily_schedule():
     today_weekday = current_time.isoweekday()
     
     # 在代码中指定开学日期
-    start_date_str = "2025-02-24"  # 修改为你的开学日期
+    start_date_str = "2023-09-04"  # 修改为你的开学日期
     try:
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
     except ValueError:
@@ -72,11 +72,16 @@ def send_daily_schedule():
         print(f"\n 正在检查：{course['course_name']}")
         
         week_type = course.get("week_type", "every").lower()
-        week_condition = (
-            (week_type == "single" and current_week % 2 == 1) or
-            (week_type == "double" and current_week % 2 == 0) or
-            (week_type == "every")
-        )
+        
+        if week_type == "every":
+            week_condition = True
+        else:
+            try:
+                week_list = [int(w) for w in week_type.split(",")]
+                week_condition = current_week in week_list
+            except ValueError:
+                print(f"⛔ 周次类型格式错误：{week_type}")
+                week_condition = False
         
         weekday_condition = course["weekday"] == today_weekday
         
@@ -92,7 +97,7 @@ def send_daily_schedule():
                     "course_name": course['course_name'],
                     "start_time": start_time.strftime('%H:%M'),
                     "location": course['location'],
-                    "week_type": week_type
+                    "week_type": course["week_type"] #使用json中的week_type
                 })
             except ValueError:
                 print(f"⛔ 时间格式错误：{course['start_time']}")
@@ -117,7 +122,7 @@ def send_daily_schedule():
         """
         for course in daily_courses:
             content += f"<p><strong>课程名称：</strong> {course['course_name']}</p>"
-            content += f"<p><strong>时间：</strong> {course['start_time']}（{course['week_type']}周）</p>"
+            content += f"<p><strong>时间：</strong> {course['start_time']}（{course['week_type']}）</p>"
             content += f"<p><strong>地点：</strong> {course['location']}</p><hr>"
         content += "</body></html>"
         
