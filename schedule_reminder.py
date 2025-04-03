@@ -21,7 +21,7 @@ def send_schedule_to_wechat(content):
         "appToken": os.getenv("WXPUSHER_APP_TOKEN"),
         "content": content,
         "summary": "今日课程提醒",
-        "contentType": 1,
+        "contentType": 2,  # 设置 contentType 为 2，表示 HTML 格式
         "topicIds": [int(os.getenv("WXPUSHER_TOPIC_ID"))]
     }
     
@@ -99,14 +99,29 @@ def send_daily_schedule():
                 continue
     
     if daily_courses:
-        content = " 今日课程提醒：\n"
+        content = """
+        <html>
+        <head>
+        <title>今日课程提醒</title>
+        <style>
+        body { font-family: sans-serif; }
+        h1 { color: #3498db; }
+        p { margin-bottom: 10px; }
+        strong { font-weight: bold; }
+        hr { border: 1px solid #ddd; }
+        </style>
+        </head>
+        <body>
+        <h1>今日课程提醒</h1>
+        """
         for course in daily_courses:
-            content += f"课程名称：{course['course_name']}\n"
-            content += f" 时间：{course['start_time']}（{course['week_type']}周）\n"
-            content += f" 地点：{course['location']}\n\n"
+            content += f"<p><strong>课程名称：</strong> {course['course_name']}</p>"
+            content += f"<p><strong>时间：</strong> {course['start_time']}（{course['week_type']}周）</p>"
+            content += f"<p><strong>地点：</strong> {course['location']}</p><hr>"
+        content += "</body></html>"
         
         print("\n✅ 今日课程：\n")
-        print(content.replace('', '').strip())
+        print(content.replace('<html><head><title>今日课程提醒</title></head><body>', '').replace('</body></html>','').strip())
         
         if send_schedule_to_wechat(content):
             print(" 提醒发送成功")
