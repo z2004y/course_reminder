@@ -5,35 +5,10 @@ from datetime import datetime, timedelta
 import pytz
 
 def load_schedule():
-    try:
-        with open('schedule.json', 'r', encoding='utf-8') as file:
-            return json.load(file)
-    except FileNotFoundError:
-        print("⚠️ 警告：未找到 schedule.json")
-        return []
-    except json.JSONDecodeError:
-        print("⚠️ 警告：schedule.json 格式错误")
-        return []
+    # ... (与之前相同)
 
 def send_schedule_to_wechat(content):
-    api_url = "https://wxpusher.zjiecode.com/api/send/message"
-    data = {
-        "appToken": os.getenv("WXPUSHER_APP_TOKEN"),
-        "content": content,
-        "summary": "今日课程提醒",
-        "contentType": 2,  # 设置 contentType 为 2，表示 HTML 格式
-        "topicIds": [int(os.getenv("WXPUSHER_TOPIC_ID"))]
-    }
-    
-    try:
-        response = requests.post(api_url, json=data, timeout=10)
-        response.raise_for_status()
-        result = response.json()
-        print(f" 推送结果：{result}")
-        return result["code"] == 1000
-    except Exception as e:
-        print(f" 发送失败：{str(e)}")
-        return False
+    # ... (与之前相同)
 
 def get_beijing_time():
     tz = pytz.timezone('Asia/Shanghai')
@@ -42,7 +17,7 @@ def get_beijing_time():
 def calculate_week(start_date, current_date):
     """计算当前日期是相对于开学日期的第几周"""
     days = (current_date.date() - start_date).days
-    return (days // 7) % 2 + 1
+    return (days // 7) + 1 # 修改为返回实际周数
 
 def send_daily_schedule():
     current_time = get_beijing_time()
@@ -57,7 +32,7 @@ def send_daily_schedule():
     today_weekday = current_time.isoweekday()
     
     # 在代码中指定开学日期
-    start_date_str = "2023-02-24"  # 修改为你的开学日期
+    start_date_str = "2025-02-24"  # 修改为你的开学日期
     try:
         start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
     except ValueError:
@@ -73,8 +48,8 @@ def send_daily_schedule():
         
         week_type = course.get("week_type", "every").lower()
         week_condition = (
-            (week_type == "single" and current_week == 1) or
-            (week_type == "double" and current_week == 2) or
+            (week_type == "single" and current_week % 2 == 1) or
+            (week_type == "double" and current_week % 2 == 0) or
             (week_type == "every")
         )
         
@@ -99,7 +74,7 @@ def send_daily_schedule():
                 continue
     
     if daily_courses:
-        content = """
+        content = f"""
         <html>
         <head>
         <title>今日课程提醒</title>
@@ -113,6 +88,7 @@ def send_daily_schedule():
         </head>
         <body>
         <h1>今日课程提醒</h1>
+        <p><strong>本周是第 {current_week} 周</strong></p>
         """
         for course in daily_courses:
             content += f"<p><strong>课程名称：</strong> {course['course_name']}</p>"
