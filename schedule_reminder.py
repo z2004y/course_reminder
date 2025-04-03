@@ -5,10 +5,35 @@ from datetime import datetime, timedelta
 import pytz
 
 def load_schedule():
-    # ... (与之前相同)
+    try:
+        with open('schedule.json', 'r', encoding='utf-8') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print("⚠️ 警告：未找到 schedule.json")
+        return []
+    except json.JSONDecodeError:
+        print("⚠️ 警告：schedule.json 格式错误")
+        return []
 
 def send_schedule_to_wechat(content):
-    # ... (与之前相同)
+    api_url = "https://wxpusher.zjiecode.com/api/send/message"
+    data = {
+        "appToken": os.getenv("WXPUSHER_APP_TOKEN"),
+        "content": content,
+        "summary": "今日课程提醒",
+        "contentType": 2,  # 设置 contentType 为 2，表示 HTML 格式
+        "topicIds": [int(os.getenv("WXPUSHER_TOPIC_ID"))]
+    }
+    
+    try:
+        response = requests.post(api_url, json=data, timeout=10)
+        response.raise_for_status()
+        result = response.json()
+        print(f" 推送结果：{result}")
+        return result["code"] == 1000
+    except Exception as e:
+        print(f" 发送失败：{str(e)}")
+        return False
 
 def get_beijing_time():
     tz = pytz.timezone('Asia/Shanghai')
