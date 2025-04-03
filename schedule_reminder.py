@@ -123,7 +123,7 @@ def send_daily_schedule():
             """
             for course in daily_courses:
                 content += f"<p><strong>课程名称：</strong> {course['course_name']}</p>"
-                content += f"<p><strong>时间：</strong> {course['start_time']}（{course['week_type']}）</p>"
+                content += f"<p><strong>时间：</strong> {course['start_time']}</p>"
                 content += f"<p><strong>地点：</strong> {course['location']}</p><hr>"
             content += "</body></html>"
         except NameError as e:
