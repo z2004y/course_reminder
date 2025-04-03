@@ -39,6 +39,11 @@ def get_beijing_time():
     tz = pytz.timezone('Asia/Shanghai')
     return datetime.now(tz)
 
+def calculate_week(start_date, current_date):
+    """计算当前日期是相对于开学日期的第几周"""
+    days = (current_date.date() - start_date).days
+    return (days // 7) % 2 + 1
+
 def send_daily_schedule():
     current_time = get_beijing_time()
     print(f" 北京时间：{current_time.strftime('%Y-%m-%d %H:%M:%S')}")
@@ -50,7 +55,16 @@ def send_daily_schedule():
 
     today = current_time.date()
     today_weekday = current_time.isoweekday()
-    current_week = (current_time.isocalendar()[1] - 1) % 2 + 1
+    
+    # 在代码中指定开学日期
+    start_date_str = "2023-09-04"  # 修改为你的开学日期
+    try:
+        start_date = datetime.strptime(start_date_str, "%Y-%m-%d").date()
+    except ValueError:
+        print(f"⛔ 开学日期格式错误：{start_date_str}")
+        return
+    
+    current_week = calculate_week(start_date, current_time)
     
     daily_courses = []
     
