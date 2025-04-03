@@ -104,27 +104,31 @@ def send_daily_schedule():
                 continue
     
     if daily_courses:
-        content = f"""
-        <html>
-        <head>
-        <title>今日课程提醒</title>
-        <style>
-        body { font-family: sans-serif; }
-        h1 { color: #3498db; }
-        p { margin-bottom: 10px; }
-        strong { font-weight: bold; }
-        hr { border: 1px solid #ddd; }
-        </style>
-        </head>
-        <body>
-        <h1>今日课程提醒</h1>
-        <p><strong>本周是第 {current_week} 周</strong></p>
-        """
-        for course in daily_courses:
-            content += f"<p><strong>课程名称：</strong> {course['course_name']}</p>"
-            content += f"<p><strong>时间：</strong> {course['start_time']}（{course['week_type']}）</p>"
-            content += f"<p><strong>地点：</strong> {course['location']}</p><hr>"
-        content += "</body></html>"
+        try:
+            content = f"""
+            <html>
+            <head>
+            <title>今日课程提醒</title>
+            <style>
+            body {{ font-family: sans-serif; }}
+            h1 {{ color: #3498db; }}
+            p {{ margin-bottom: 10px; }}
+            strong {{ font-weight: bold; }}
+            hr {{ border: 1px solid #ddd; }}
+            </style>
+            </head>
+            <body>
+            <h1>今日课程提醒</h1>
+            <p><strong>本周是第 {current_week} 周</strong></p>
+            """
+            for course in daily_courses:
+                content += f"<p><strong>课程名称：</strong> {course['course_name']}</p>"
+                content += f"<p><strong>时间：</strong> {course['start_time']}（{course['week_type']}）</p>"
+                content += f"<p><strong>地点：</strong> {course['location']}</p><hr>"
+            content += "</body></html>"
+        except NameError as e:
+            print(f"HTML 格式错误：{e}")
+            return
         
         print("\n✅ 今日课程：\n")
         print(content.replace('<html><head><title>今日课程提醒</title></head><body>', '').replace('</body></html>','').strip())
