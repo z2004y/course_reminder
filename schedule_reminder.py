@@ -44,8 +44,8 @@ def calculate_week(start_date, current_date):
     days = (current_date.date() - start_date).days
     return (days // 7) + 1 # 修改为返回实际周数
 
-def get_weather(city):
-    """获取指定城市的天气信息"""
+def get_today_weather(city):
+    """获取指定城市当日的天气信息"""
     api_url = 'http://apis.juhe.cn/simpleWeather/query'
     api_key = os.getenv("JUHE_WEATHER_KEY")  # 从环境变量中获取聚合数据 Weather API Key
     if not api_key:
@@ -60,12 +60,16 @@ def get_weather(city):
         response = requests.get(api_url, params=params, timeout=5)
         response.raise_for_status()
         weather_data = response.json()
-        if weather_data and weather_data.get('result'):
-            realtime = weather_data['result']['realtime']
-            temperature = realtime['temperature']
-            weather = realtime['info']
-            wind = realtime['direct'] + realtime['power']
-            return f"{city}：{weather}，{temperature}℃，{wind}"
+        if weather_data and weather_data.get('result') and weather_data['result'].get('future'):
+            today_str = datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d')
+            for day_weather in weather_data['result']['future']:
+                if day_weather['date'] == today_str:
+                    temperature = day_weather['temperature']
+                    weather = day_weather['weather']
+                    direct = day_weather['direct']
+                    return f"{city}：{weather}，{temperature}，{direct}"
+            print(f"⚠️ 未找到 {city} 今天的天气信息")
+            return None
         else:
             print(f"⚠️ 获取 {city} 天气信息失败：{weather_data.get('reason')}")
             return None
@@ -150,10 +154,10 @@ def send_daily_schedule():
     <p><strong>本周是第 {current_week} 周</strong></p>
     """
 
-    # 获取天气信息
-    weather_info = get_weather("兰州")  # 根据你的地理位置修改城市名称
+    # 获取当日天气信息
+    weather_info = get_today_weather("兰州")  # 根据你的地理位置修改城市名称
     if weather_info:
-        content += f"<p><strong>天气预报：</strong> {weather_info}</p><hr>"
+        content += f"<p><strong>今日天气：</strong> {weather_info}</p><hr>"
 
     if daily_courses:
         try:
