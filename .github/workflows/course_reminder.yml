@@ -8,21 +8,25 @@ on:
 jobs:
   send_reminder:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
-      
+      uses: actions/checkout@v3  # 使用 actions/checkout@v3 以获取最新的功能和安全修复
+
     - name: Set up Python
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v4  # 使用 actions/setup-python@v4 以获取最新的功能和安全修复
       with:
-        python-version: 3.8
-    
+        python-version: '3.x'  # 使用更通用的 '3.x'
+
     - name: Install dependencies
       run: pip install requests pytz
-      
+
+    - name: Set Beijing Timezone
+      run: echo "TZ='Asia/Shanghai'" >> $GITHUB_ENV  # 设置时区为北京
+
     - name: Run schedule reminder
       env:
         WXPUSHER_APP_TOKEN: ${{ secrets.WXPUSHER_APP_TOKEN }}
         WXPUSHER_TOPIC_ID: ${{ secrets.WXPUSHER_TOPIC_ID }}
+        JUHE_WEATHER_KEY: ${{ secrets.JUHE_WEATHER_KEY }} # 添加聚合数据天气 API Key 密钥
       run: python schedule_reminder.py
