@@ -94,7 +94,7 @@
         "course_name": "try",
         "start_time": "12:00",
         "location": "online class",
-        "weekday": 6,
-        "week_type": "5"
+        "weekday": 5,
+        "week_type": "6"
     }
 ]
